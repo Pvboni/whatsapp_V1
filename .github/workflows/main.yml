@@ -22,4 +22,4 @@ jobs:
         pip install pywhatkit
 
     - name: Run Python script
-      run: test1.py
+      run: python test1.py
