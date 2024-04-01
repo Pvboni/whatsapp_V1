@@ -15,8 +15,9 @@ jobs:
       with:
         python-version: '3.9'  # Specify the Python version you want to use
 
-    - name: List directory contents
-      run: ls -R  # List all files and directories in the current working directory
-
+    - name: Install dependencies
+      run: |
+        pip install pywhatkit
+        
     - name: Run Python script
       run: python Test1.py
