@@ -1,0 +1,26 @@
+name: Schedule WhatsApp Messages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  schedule_messages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install pywhatkit
+
+    - name: Run Python script
+      run: python path/to/your/script.py
