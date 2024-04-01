@@ -1,19 +1,22 @@
+import os
 from twilio.rest import Client
 
-# Your Twilio Account SID and Auth Token
-account_sid = 'your_account_sid'
-auth_token = 'your_auth_token'
+# Retrieve Twilio Account SID and Auth Token from environment variables
+account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
 
-# Initialize Twilio client
+# Verify if account_sid and auth_token are retrieved successfully
+if account_sid is None or auth_token is None:
+    print("Twilio credentials not found. Please set the environment variables TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN.")
+    exit(1)
+
 client = Client(account_sid, auth_token)
 
-# Retrieve message details
-message_id = 'SMe7c21571d9cad5aebfa8bdd6cb9192c0'
-message = client.messages(message_id).fetch()
+# Send a message
+message = client.messages.create(
+    body='join skin-sad',
+    from_='whatsapp:+14155238886',  # Twilio sandbox number
+    to='whatsapp:+5511998995650'  # Your WhatsApp number
+)
 
-# Print message details
-print("Message SID:", message.sid)
-print("Status:", message.status)
-print("Body:", message.body)
-print("From:", message.from_)
-print("To:", message.to)
+print(message.sid)
