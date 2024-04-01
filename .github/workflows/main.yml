@@ -23,4 +23,4 @@ jobs:
         pip install pywhatkit
 
     - name: Run Python script
-      run: whatsapp_V1/test1.py
+      run: test1.py
