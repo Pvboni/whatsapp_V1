@@ -5,6 +5,7 @@ from twilio.rest import Client
 account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
 auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
 
+# Verify if account_sid and auth_token are retrieved successfully
 if account_sid is None or auth_token is None:
     print("Twilio credentials not found. Please set the environment variables TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN.")
     exit(1)
