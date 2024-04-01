@@ -17,7 +17,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pywhatkit
-        
+        pip install twilio
+
     - name: Run Python script
+      env:
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
       run: python Test1.py
