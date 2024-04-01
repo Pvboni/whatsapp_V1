@@ -1,6 +1,6 @@
 import pywhatkit
 
-phone_num = '+123456789'  # Enter recipient's phone number
+phone_num = '+5511998995650'  # Enter recipient's phone number
 message = 'hello'  # Enter your message
 
 try:
