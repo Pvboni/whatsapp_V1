@@ -6,7 +6,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# If modifying these scopes, delete the file token.json.
+# If modifying these scopes, specify the scopes directly here
 TASKS_SCOPES = ["https://www.googleapis.com/auth/tasks.readonly"]
 SHEETS_SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
@@ -23,7 +23,14 @@ def get_tasks(credentials):
 
 def write_to_sheet(credentials, tasks):
     """Write tasks to Google Sheet."""
-    creds = Credentials.from_authorized_user_file("token.json", SHEETS_SCOPES)
+    creds = Credentials.from_authorized_user_info({
+        'token': os.environ['GOOGLE_TASKS_ACCESS_TOKEN'],
+        'refresh_token': os.environ['GOOGLE_TASKS_REFRESH_TOKEN'],
+        'token_uri': 'https://oauth2.googleapis.com/token',
+        'client_id': os.environ['GOOGLE_TASKS_CLIENT_ID'],
+        'client_secret': os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
+        'scopes': SHEETS_SCOPES
+    })
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(RANGE_NAME)
     for task in tasks:
@@ -31,18 +38,14 @@ def write_to_sheet(credentials, tasks):
 
 def main():
     """Main function to retrieve tasks and write to sheet."""
-    creds = None
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", TASKS_SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                "tasks_credentials.json", TASKS_SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
+    creds = Credentials.from_authorized_user_info({
+        'token': os.environ['GOOGLE_TASKS_ACCESS_TOKEN'],
+        'refresh_token': os.environ['GOOGLE_TASKS_REFRESH_TOKEN'],
+        'token_uri': 'https://oauth2.googleapis.com/token',
+        'client_id': os.environ['GOOGLE_TASKS_CLIENT_ID'],
+        'client_secret': os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
+        'scopes': TASKS_SCOPES
+    })
 
     try:
         tasks = get_tasks(creds)
