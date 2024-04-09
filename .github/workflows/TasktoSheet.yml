@@ -17,6 +17,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pip install --upgrade google-api-python-client
         pip install gspread google-auth google-auth-oauthlib google-auth-httplib2
 
     - name: Run Python script
