@@ -22,4 +22,4 @@ jobs:
     - name: Run Python script
       env:
         GOOGLE_TASKS_API_KEY: ${{ secrets.GOOGLE_TASKS_API_KEY }}
-      run: python tasktosheet.py
+      run: python Tasktosheet.py
