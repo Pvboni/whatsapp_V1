@@ -1,0 +1,25 @@
+name: Manual WhatsApp Messages
+
+on:
+  workflow_dispatch:  # Manually trigger the workflow
+
+jobs:
+  run_python_script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # Specify the Python version you want to use
+
+    - name: Install dependencies
+      run: |
+        pip install gspread google-auth google-auth-oauthlib google-auth-httplib2
+
+    - name: Run Python script
+      env:
+        GOOGLE_TASKS_API_KEY: ${{ secrets.GOOGLE_TASKS_API_KEY }}
+      run: python tasktosheet.py
