@@ -23,14 +23,14 @@ def get_tasks(credentials):
 
 def write_to_sheet(credentials, tasks):
     """Write tasks to Google Sheet."""
-    creds = Credentials.from_authorized_user_info({
-        'token': os.environ['GOOGLE_TASKS_ACCESS_TOKEN'],
-        'refresh_token': os.environ['GOOGLE_TASKS_REFRESH_TOKEN'],
-        'token_uri': 'https://oauth2.googleapis.com/token',
-        'client_id': os.environ['GOOGLE_TASKS_CLIENT_ID'],
-        'client_secret': os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
-        'scopes': SHEETS_SCOPES
-    })
+    creds = Credentials(
+        token=None,
+        refresh_token=None,
+        token_uri='https://oauth2.googleapis.com/token',
+        client_id=os.environ['GOOGLE_TASKS_CLIENT_ID'],
+        client_secret=os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
+        scopes=SHEETS_SCOPES
+    )
     client = gspread.authorize(creds)
     sheet = client.open_by_key(SPREADSHEET_ID).worksheet(RANGE_NAME)
     for task in tasks:
@@ -38,14 +38,14 @@ def write_to_sheet(credentials, tasks):
 
 def main():
     """Main function to retrieve tasks and write to sheet."""
-    creds = Credentials.from_authorized_user_info({
-        'token': os.environ['GOOGLE_TASKS_ACCESS_TOKEN'],
-        'refresh_token': os.environ['GOOGLE_TASKS_REFRESH_TOKEN'],
-        'token_uri': 'https://oauth2.googleapis.com/token',
-        'client_id': os.environ['GOOGLE_TASKS_CLIENT_ID'],
-        'client_secret': os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
-        'scopes': TASKS_SCOPES
-    })
+    creds = Credentials(
+        token=None,
+        refresh_token=None,
+        token_uri='https://oauth2.googleapis.com/token',
+        client_id=os.environ['GOOGLE_TASKS_CLIENT_ID'],
+        client_secret=os.environ['GOOGLE_TASKS_CLIENT_SECRET'],
+        scopes=TASKS_SCOPES
+    )
 
     try:
         tasks = get_tasks(creds)
