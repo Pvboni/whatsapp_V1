@@ -12,7 +12,9 @@ def test_google_api():
     
     # Load credentials from environment variables
     creds = Credentials(
+        None,
         refresh_token=os.getenv('GOOGLE_TASKS_REFRESH_TOKEN'),
+        token_uri='https://oauth2.googleapis.com/token',
         client_id=os.getenv('GOOGLE_TASKS_CLIENT_ID'),
         client_secret=os.getenv('GOOGLE_TASKS_CLIENT_SECRET')
     )
